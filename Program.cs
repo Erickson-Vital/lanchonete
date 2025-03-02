@@ -1,7 +1,17 @@
+using lanchonete.Services;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Conexão com banco de dados
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    var connecttionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    options.UseSqlServer(connecttionString);
+});
 
 var app = builder.Build();
 
