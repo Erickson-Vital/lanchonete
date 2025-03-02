@@ -1,0 +1,22 @@
+# Pastas de build
+bin/
+obj/
+
+# Configurações do Visual Studio
+.vs/
+.vscode/
+
+# Configurações de usuário e estado do projeto
+*.suo
+*.user
+*.dotCover
+*.ncrunch*
+*.DS_Store
+
+# Dependências de pacotes
+packages/
+*.nuget/
+
+# Configurações de build
+*.csproj.user
+*.sln.docstates
