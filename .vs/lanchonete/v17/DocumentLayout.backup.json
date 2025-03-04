@@ -3,12 +3,57 @@
   "WorkspaceRootPath": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|d:\\documentos(hd)\\documenos\\github\\lanchonete\\views\\lanches\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|solutionrelative:views\\lanches\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|d:\\documentos(hd)\\documenos\\github\\lanchonete\\areas\\identity\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|solutionrelative:areas\\identity\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/./msdb/True/SqlTable/dbo.AspNetUserRoles.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/./msdb/True/SqlTable/dbo.AspNetUsers.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|d:\\documentos(hd)\\documenos\\github\\lanchonete\\areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|solutionrelative:areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|d:\\documentos(hd)\\documenos\\github\\lanchonete\\controllers\\lanchescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|solutionrelative:controllers\\lanchescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|d:\\documentos(hd)\\documenos\\github\\lanchonete\\views\\lanches\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|solutionrelative:views\\lanches\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|d:\\documentos(hd)\\documenos\\github\\lanchonete\\areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|solutionrelative:areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|d:\\documentos(hd)\\documenos\\github\\lanchonete\\areas\\identity\\pages\\account\\register.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|solutionrelative:areas\\identity\\pages\\account\\register.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|d:\\documentos(hd)\\documenos\\github\\lanchonete\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|d:\\documentos(hd)\\documenos\\github\\lanchonete\\views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|solutionrelative:views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/./msdb/True/SqlTable/dbo.AspNetRoles.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|d:\\documentos(hd)\\documenos\\github\\lanchonete\\views\\lanches\\index2.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|solutionrelative:views\\lanches\\index2.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|d:\\documentos(hd)\\documenos\\github\\lanchonete\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|solutionrelative:migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|d:\\documentos(hd)\\documenos\\github\\lanchonete\\services\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B718F05B-1E34-4FCE-9E84-F5E749F7CB44}|lanchonete.csproj|solutionrelative:services\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,17 +63,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Views\\Lanches\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Lanches\\Index.cshtml",
-              "ToolTip": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Views\\Lanches\\Index.cshtml",
-              "RelativeToolTip": "Views\\Lanches\\Index.cshtml",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAABYAAAARAAAAAAAAAA==",
+              "DocumentIndex": 11,
+              "Title": "Index2.cshtml",
+              "DocumentMoniker": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Views\\Lanches\\Index2.cshtml",
+              "RelativeDocumentMoniker": "Views\\Lanches\\Index2.cshtml",
+              "ToolTip": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Views\\Lanches\\Index2.cshtml",
+              "RelativeToolTip": "Views\\Lanches\\Index2.cshtml",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAuwB8AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-02-26T14:30:39.087Z",
               "IsPinned": true,
@@ -36,13 +81,160 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ApplicationDbContextModelSnapshot.cs",
+              "DocumentMoniker": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ToolTip": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeToolTip": "Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ViewState": "AgIAAL4AAAAAAAAAAAAkwNoAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-03T19:35:07.42Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Login.cshtml.cs",
+              "DocumentMoniker": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "ToolTip": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAkwHIAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-03T19:22:35.92Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "dbo.AspNetRoles [Dados]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/./msdb/True/SqlTable/dbo.AspNetRoles.sql",
+              "ToolTip": "dbo.AspNetRoles [Dados]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-03-03T16:09:15.789Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "dbo.AspNetUserRoles [Dados]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/./msdb/True/SqlTable/dbo.AspNetUserRoles.sql",
+              "ToolTip": "dbo.AspNetUserRoles [Dados]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-03-03T16:09:02.867Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "dbo.AspNetUsers [Dados]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/./msdb/True/SqlTable/dbo.AspNetUsers.sql",
+              "ToolTip": "dbo.AspNetUsers [Dados]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-03-03T16:08:11.295Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "ToolTip": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-03T15:11:05.999Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Register.cshtml.cs",
+              "DocumentMoniker": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "ToolTip": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Register.cshtml.cs",
+              "ViewState": "AgIAAG8AAAAAAAAAAAAkwHcAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-03T05:08:35.518Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Register.cshtml",
+              "DocumentMoniker": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "ToolTip": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-03T04:59:56.196Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "_LoginPartial.cshtml",
+              "DocumentMoniker": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Views\\Shared\\_LoginPartial.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_LoginPartial.cshtml",
+              "ToolTip": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Views\\Shared\\_LoginPartial.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_LoginPartial.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAACUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-03T04:08:24.195Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAABIAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-02T04:18:05.684Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Services\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Services\\ApplicationDbContext.cs",
+              "ToolTip": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Services\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Services\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAowB4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-02T03:38:58.302Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Views\\Lanches\\Create.cshtml",
+              "RelativeDocumentMoniker": "Views\\Lanches\\Create.cshtml",
+              "ToolTip": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Views\\Lanches\\Create.cshtml",
+              "RelativeToolTip": "Views\\Lanches\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-02-26T14:45:04.51Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "LanchesController.cs",
               "DocumentMoniker": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Controllers\\LanchesController.cs",
               "RelativeDocumentMoniker": "Controllers\\LanchesController.cs",
               "ToolTip": "D:\\Documentos(HD)\\Documenos\\GitHub\\lanchonete\\Controllers\\LanchesController.cs",
               "RelativeToolTip": "Controllers\\LanchesController.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAQwBYAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-26T14:23:42.914Z",
               "EditorCaption": ""
