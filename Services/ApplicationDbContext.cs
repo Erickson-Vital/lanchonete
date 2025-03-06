@@ -14,6 +14,8 @@ namespace lanchonete.Services
 
         public DbSet<Lanche> Lanches { get; set; }
         public DbSet<Ingrediente> Ingredientes { get; set; }
+        public DbSet<ItemPedido> ItemPedidos { get; set; }
+        public DbSet<Pedido> Pedidos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,16 +30,6 @@ namespace lanchonete.Services
             // Chave para o Identity
             modelBuilder.Entity<IdentityUserLogin<string>>()
                 .HasKey(l => new { l.LoginProvider, l.ProviderKey });
-
-
-            // Criando a parte de acessos(Roles)
-            var admin = new IdentityRole("admin");
-            admin.NormalizedName = "admin";
-
-            var cliente = new IdentityRole("cliente");
-            cliente.NormalizedName = "cliente";
-
-            modelBuilder.Entity<IdentityRole>().HasData(admin, cliente);
 
         }
     }

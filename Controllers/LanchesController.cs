@@ -63,6 +63,7 @@ namespace lanchonete.Controllers
                     var lanche = new Lanche()
                     {
                         Image = memoryStream.ToArray(),
+                        ImageMimiType = lancheDto.Image.ContentType,
                         Name = lancheDto.Name,
                         Price = lancheDto.Price,
                         Ingredientes = _context.Ingredientes.Where(i => lancheDto.IngredientesSelecionados.Contains(i.Id)).ToList(),

@@ -12,8 +12,8 @@ using lanchonete.Services;
 namespace lanchonete.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250303040342_LoginMigration2")]
-    partial class LoginMigration2
+    [Migration("20250306161606_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,19 +65,6 @@ namespace lanchonete.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1a7c2a16-61a8-4aaf-9d81-68302e1868e8",
-                            Name = "admin",
-                            NormalizedName = "cliente"
-                        },
-                        new
-                        {
-                            Id = "78e53f68-fe64-4249-b9ab-750a0e269657",
-                            Name = "cliente"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -133,10 +120,12 @@ namespace lanchonete.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -173,10 +162,12 @@ namespace lanchonete.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -275,6 +266,35 @@ namespace lanchonete.Migrations
                     b.ToTable("Ingredientes");
                 });
 
+            modelBuilder.Entity("lanchonete.Models.ItemPedido", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("LancheID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PedidoId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LancheID");
+
+                    b.HasIndex("PedidoId");
+
+                    b.ToTable("ItemPedidos");
+                });
+
             modelBuilder.Entity("lanchonete.Models.Lanche", b =>
                 {
                     b.Property<int>("Id")
@@ -287,6 +307,10 @@ namespace lanchonete.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<string>("ImageMimiType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -297,6 +321,28 @@ namespace lanchonete.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Lanches");
+                });
+
+            modelBuilder.Entity("lanchonete.Models.Pedido", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pedidos");
                 });
 
             modelBuilder.Entity("IngredienteLanche", b =>
@@ -363,6 +409,26 @@ namespace lanchonete.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("lanchonete.Models.ItemPedido", b =>
+                {
+                    b.HasOne("lanchonete.Models.Lanche", "Lanche")
+                        .WithMany()
+                        .HasForeignKey("LancheID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("lanchonete.Models.Pedido", null)
+                        .WithMany("Itens")
+                        .HasForeignKey("PedidoId");
+
+                    b.Navigation("Lanche");
+                });
+
+            modelBuilder.Entity("lanchonete.Models.Pedido", b =>
+                {
+                    b.Navigation("Itens");
                 });
 #pragma warning restore 612, 618
         }

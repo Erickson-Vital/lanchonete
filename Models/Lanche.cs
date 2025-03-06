@@ -14,6 +14,7 @@ namespace lanchonete.Models
 
         [Column(TypeName = "varbinary(max)")]
         public byte[] Image { get; set; }
+        public string ImageMimiType { get; set; }
 
         public ICollection<Ingrediente> Ingredientes { get; set; }
     }

@@ -1,0 +1,39 @@
+﻿@model List<Lanche>
+
+
+<h1>Cardapio Bala</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nome
+            </th>
+            <th>
+                Preço
+            </th>
+            <th>
+                Image
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <img src="@Url.Action("GetPhoto", "Cardapio", new {id=item.Id})" />
+            </td>
+            <td>
+                <a asp-action="Edit">Adicionar</a> |
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
