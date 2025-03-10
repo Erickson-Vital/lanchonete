@@ -54,3 +54,7 @@ cd lanchonete
 dotnet ef update-database
 dotnet run
 
+Criar usuario e fazer relação das regras de ADMIN para o mesmo.
+
+pegando o ID de ADMIN na tabela "AspNetRoles" e colando na coluna "RoleID" na tabela "AspNetUserRoles"
+
