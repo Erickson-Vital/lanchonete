@@ -47,8 +47,7 @@ Sistema web para gestao de pedidos para uma lanchonete.
 
 ### Passos:
 ```bash
-git clone https://github.com/seuusuario/lanchonete.git
-cd lanchonete
+git clone https://github.com/Erickson-Vital/lanchonete
 
 Configurar o "DefaultConnection" que esta em "Appsettings.json" colocando a string de conexao do banco
 
