@@ -54,8 +54,7 @@ cd lanchonete
 
 Configurar o "DefaultConnection" que esta em "Appsettings.json" colocando a string de conexao do banco
 
-dotnet ef update-database
-dotnet run
+update-database (para rodar a migration)
 
 Criar usuario e fazer relação das regras de ADMIN para o mesmo.
 
