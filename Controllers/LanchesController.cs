@@ -38,9 +38,17 @@ namespace lanchonete.Controllers
 
         public IActionResult Create()
         {
-            //LancheDto lanche = new LancheDto();
+            System.Globalization.CultureInfo.DefaultThreadCurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 
-            ViewBag.LanchesDisponiveis = new SelectList(_context.Ingredientes.ToList(), nameof(Ingrediente.Id), nameof(Ingrediente.Name));
+            var ingredientes = _context.Ingredientes
+                .Select(i => new
+                {
+                    id = i.Id,
+                    nome = i.Name,
+                    preco = i.Price
+                }).ToList();
+
+            ViewBag.IngredientesJson = System.Text.Json.JsonSerializer.Serialize(ingredientes);
 
             return View();
         }
@@ -57,20 +65,22 @@ namespace lanchonete.Controllers
             {
                 await lancheDto.Image.CopyToAsync(memoryStream);
 
-                // Upload the file if less than 2 MB
-                if (memoryStream.Length < 2097152)
+                if (memoryStream.Length < 2097152) // 2MB o limite da img
                 {
+                    var ingredientesSelecionados = _context.Ingredientes
+                        .Where(i => lancheDto.IngredientesSelecionados.Contains(i.Id))
+                        .ToList();
+
                     var lanche = new Lanche()
                     {
                         Image = memoryStream.ToArray(),
                         ImageMimiType = lancheDto.Image.ContentType,
                         Name = lancheDto.Name,
-                        Price = lancheDto.Price,
-                        Ingredientes = _context.Ingredientes.Where(i => lancheDto.IngredientesSelecionados.Contains(i.Id)).ToList(),
+                        Ingredientes = ingredientesSelecionados,
+                        Price = lancheDto.Price // O valor calculado no Front será salvo aqui!
                     };
 
                     _context.Lanches.Add(lanche);
-
                     await _context.SaveChangesAsync();
                 }
                 else
@@ -81,10 +91,46 @@ namespace lanchonete.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View(lancheDto); // se der algum erro ele retorna a VIEW
+                return View(lancheDto);
             }
 
             return RedirectToAction("Index", "Lanches");
         }
+
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var lanche = await _context.Lanches
+                .Include(l => l.Ingredientes)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (lanche == null)
+                return NotFound();
+
+            return View(lanche);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var lanche = await _context.Lanches
+                .Include(l => l.Ingredientes)
+                .FirstOrDefaultAsync(l => l.Id == id);
+
+            if (lanche != null)
+            {
+                lanche.Ingredientes.Clear();
+                _context.Lanches.Remove(lanche);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
     }
 }

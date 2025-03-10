@@ -1,157 +1,193 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using lanchonete.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using lanchonete.Models;
+using System.Security.Claims;
 using lanchonete.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace lanchonete.Controllers
 {
-    public class PedidosController : Controller
+    public class PedidoController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager; // Para obter o usuário logado
 
-        public PedidosController(ApplicationDbContext context)
+        public PedidoController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        // GET: Pedidoes
-        public async Task<IActionResult> Index()
+        public IActionResult AdicionarAoPedido(int id)
         {
-            return View(await _context.Pedidos.ToListAsync());
-        }
-
-        // GET: Pedidoes/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
+            var lanche = _context.Lanches.Find(id);
+            if (lanche == null)
             {
                 return NotFound();
             }
 
-            var pedido = await _context.Pedidos
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (pedido == null)
+            var pedidoAtual = ObterPedidoAtual();
+
+            if (pedidoAtual == null)
             {
-                return NotFound();
-            }
-
-            return View(pedido);
-        }
-
-        // GET: Pedidoes/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Pedidoes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Price,Status,CreatedDate")] Pedido pedido)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(pedido);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(pedido);
-        }
-
-        // GET: Pedidoes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var pedido = await _context.Pedidos.FindAsync(id);
-            if (pedido == null)
-            {
-                return NotFound();
-            }
-            return View(pedido);
-        }
-
-        // POST: Pedidoes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Price,Status,CreatedDate")] Pedido pedido)
-        {
-            if (id != pedido.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                pedidoAtual = new Pedido
                 {
-                    _context.Update(pedido);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
+                    Itens = new List<ItemPedido>()
+                };
+            }
+
+            if (pedidoAtual.Itens == null)
+            {
+                pedidoAtual.Itens = new List<ItemPedido>();
+            }
+
+            var itemExistente = pedidoAtual.Itens.FirstOrDefault(i => i.LancheID == id);
+
+            if (itemExistente != null)
+            {
+                itemExistente.Quantidade++;
+            }
+            else
+            {
+                pedidoAtual.Itens.Add(new ItemPedido
                 {
-                    if (!PedidoExists(pedido.Id))
+                    LancheID = lanche.Id,
+                    Lanche = lanche,
+                    Quantidade = 1,
+                    Price = lanche.Price // preço unitário
+                });
+            }
+
+            SalvarPedidoNaSessao(pedidoAtual);
+            return RedirectToAction("Index", "Cardapio");
+        }
+
+
+
+        public IActionResult ExibirPedido()
+        {
+            var pedido = ObterPedidoAtual();
+            return View("Views/Pedido/ExibirPedido.cshtml", pedido);
+        }
+
+        public async Task<IActionResult> FinalizarPedido()
+        {
+            var pedido = ObterPedidoAtual();
+
+            if (!pedido.Itens.Any())
+            {
+                return RedirectToAction("Index", "Cardapio");
+            }
+
+            var usuarioId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var novoPedido = new Pedido
+            {
+                CreatedDate = DateTime.Now,
+                Status = 0,
+                UsuarioId = usuarioId,
+                Itens = new List<ItemPedido>()
+            };
+
+            foreach (var item in pedido.Itens)
+            {
+                // Garante que o Lanche já está sendo rastreado, não vai tentar inseri-lo de novo
+                var lancheReal = await _context.Lanches.FindAsync(item.LancheID);
+
+                if (lancheReal != null)
+                {
+                    novoPedido.Itens.Add(new ItemPedido
                     {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                        LancheID = lancheReal.Id,
+                        Lanche = lancheReal,
+                        Quantidade = item.Quantidade,
+                        Price = lancheReal.Price
+                    });
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(pedido);
+
+            novoPedido.Price = novoPedido.Itens.Sum(i => i.Price * i.Quantidade);
+
+            _context.Pedidos.Add(novoPedido);
+            await _context.SaveChangesAsync();
+
+            LimparPedido();
+
+            return View("Views/Pedido/PedidoFinalizado.cshtml", novoPedido);
         }
 
-        // GET: Pedidoes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult RemoverDoPedido(int id)
         {
-            if (id == null)
+            var pedidoAtual = ObterPedidoAtual();
+
+            if (pedidoAtual.Itens != null)
             {
-                return NotFound();
+                var itemParaRemover = pedidoAtual.Itens.FirstOrDefault(i => i.LancheID == id);
+                if (itemParaRemover != null)
+                {
+                    pedidoAtual.Itens.Remove(itemParaRemover);
+                    SalvarPedidoNaSessao(pedidoAtual);
+                }
             }
 
-            var pedido = await _context.Pedidos
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (pedido == null)
-            {
-                return NotFound();
-            }
-
-            return View(pedido);
+            return RedirectToAction("Index", "Cardapio");
         }
 
-        // POST: Pedidoes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+
+        private Pedido ObterPedidoAtual()
         {
-            var pedido = await _context.Pedidos.FindAsync(id);
+            var pedido = HttpContext.Session.GetString("Pedido");
+
             if (pedido != null)
             {
-                _context.Pedidos.Remove(pedido);
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<Pedido>(pedido);
             }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return new Pedido();
         }
 
-        private bool PedidoExists(int id)
+        private void SalvarPedidoNaSessao(Pedido pedido)
         {
-            return _context.Pedidos.Any(e => e.Id == id);
+            HttpContext.Session.SetString("Pedido", Newtonsoft.Json.JsonConvert.SerializeObject(pedido));
         }
+
+        private void LimparPedido()
+        {
+            HttpContext.Session.Remove("Pedido");
+        }
+
+
+        [Authorize]
+        public IActionResult MeusPedidos()
+        {
+            var usuarioId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isAdmin = User.IsInRole("admin");
+
+            var pedidos = _context.Pedidos
+                .Include(p => p.Itens)
+                    .ThenInclude(i => i.Lanche)
+                .Where(p => isAdmin || p.UsuarioId == usuarioId)
+                .OrderByDescending(p => p.CreatedDate)
+                .ToList();
+
+            return View("MeusPedidos", pedidos);
+        }
+
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public async Task<IActionResult> Concluir(int id)
+        {
+            var pedido = await _context.Pedidos.FindAsync(id);
+
+            if (pedido == null)
+                return NotFound();
+
+            pedido.Status = 1;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("MeusPedidos");
+        }
+
+
     }
 }

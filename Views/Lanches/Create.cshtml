@@ -4,50 +4,103 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg p-4">
+                <h2 class="text-center mb-4">Criar Novo Lanche</h2>
+                <form asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-<h4>Lanche</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" type="number"/>
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Name" class="form-label fw-bold"></label>
+                        <input asp-for="Name" class="form-control" placeholder="Digite o nome do lanche" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group">
-                <label class="col-sm-4 col-form-label">Ingredientes</label>
-                <div class="col-sm-8">
-                    <select class="form-select" asp-items="ViewBag.LanchesDisponiveis" asp-for="IngredientesSelecionados" multiple>
-                    </select>
+                    <!-- Exibe o preço total -->
+                    <div class="form-group mb-3">
+                        <label class="form-label fw-bold">Preço Total:</label>
+                        <p id="precoTotal">R$ 0,00</p>
+                    </div>
+
+                    <!-- Campo oculto para armazenar o preço calculado -->
+                    <input asp-for="Price" type="hidden" id="Price" />
+
+                    <div class="form-group mb-3">
+                        <label class="form-label fw-bold">Ingredientes</label>
+                        <select class="form-select" id="IngredientesSelecionados" name="IngredientesSelecionados" multiple>
+                            @* As opções serão adicionadas via JS *@
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Image" class="form-label fw-bold"></label>
+                        <input asp-for="Image" class="form-control" type="file" />
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary w-100">Criar Lanche</button>
+                    </div>
+                </form>
+
+                <div class="text-center mt-3">
+                    <a asp-action="Index" class="btn btn-outline-secondary w-100">Voltar para Lista</a>
                 </div>
             </div>
-
-            <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" class="form-control" />
-                <span asp-validation-for="Image" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        const ingredientes = @Html.Raw(ViewBag.IngredientesJson);
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const select = document.getElementById("IngredientesSelecionados");
+            const precoEl = document.getElementById("precoTotal");
+            const inputPreco = document.getElementById("Price");
+
+            // Popula o select manualmente
+            ingredientes.forEach(ing => {
+                const opt = document.createElement("option");
+                opt.value = ing.id;
+                opt.textContent = `${ing.nome} (R$ ${ing.preco.toFixed(2).replace(".", ",")})`;
+                opt.dataset.price = ing.preco;
+                select.appendChild(opt);
+            });
+
+            // Inicia Select2
+            $('#IngredientesSelecionados').select2({
+                placeholder: "Selecione os ingredientes"
+            });
+
+            function atualizarPreco() {
+                const selecionados = $('#IngredientesSelecionados').val();
+                let total = 0;
+
+                if (selecionados) {
+                    for (let id of selecionados) {
+                        const ing = ingredientes.find(i => i.id == id);
+                        if (ing) total += ing.preco;
+                    }
+                }
+
+                precoEl.innerText = `R$ ${total.toFixed(2).replace(".", ",")}`;
+                inputPreco.value = total.toFixed(2).replace(",", ".");
+
+            }
+
+            $('#IngredientesSelecionados').on('change', atualizarPreco);
+        });
+    </script>
 }

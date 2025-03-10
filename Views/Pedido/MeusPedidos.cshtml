@@ -1,0 +1,60 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+
+@model IEnumerable<lanchonete.Models.Pedido>
+
+@{
+    ViewData["Title"] = "Meus Pedidos";
+    var isAdmin = User.IsInRole("admin");
+}
+
+<h2 class="mb-4">@(isAdmin ? "Todos os Pedidos" : "Meus Pedidos")</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        @(isAdmin ? "Nenhum pedido encontrado no sistema." : "Você ainda não fez nenhum pedido.")
+    </div>
+}
+else
+{
+    foreach (var pedido in Model)
+    {
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Pedido #@pedido.Id</h5>
+                <p class="card-text">
+                    <strong>Data:</strong> @pedido.CreatedDate.ToString("dd/MM/yyyy HH:mm")<br />
+                    <strong>Status:</strong> @(pedido.Status == 0 ? "Em andamento" : "Finalizado")<br />
+                    <strong>Total:</strong> @pedido.Price.ToString("C")<br />
+                    @if (isAdmin)
+                    {
+                        <strong>Usuário:</strong> @pedido.UsuarioId
+
+                        <br />
+                    }
+                </p>
+
+                <h6>Itens:</h6>
+                <ul class="list-group mb-3">
+                    @foreach (var item in pedido.Itens)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @item.Lanche.Name
+                            <span>@item.Quantidade x @item.Price.ToString("C")</span>
+                        </li>
+                    }
+                </ul>
+
+                @if (isAdmin && pedido.Status == 0)
+                {
+                    <form asp-controller="Pedido" asp-action="Concluir" method="post">
+                        <input type="hidden" name="id" value="@pedido.Id" />
+                        <button type="submit" class="btn btn-success">Concluir Pedido</button>
+                    </form>
+                }
+            </div>
+        </div>
+    }
+}

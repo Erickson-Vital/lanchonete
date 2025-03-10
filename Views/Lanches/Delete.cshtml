@@ -1,0 +1,32 @@
+﻿@model lanchonete.Models.Lanche
+
+@{
+    ViewData["Title"] = "Excluir lanche";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h2 class="text-danger text-center">Tem certeza que deseja excluir este lanche?</h2>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3">Nome:</dt>
+            <dd class="col-sm-9">@Model.Name</dd>
+
+            <dt class="col-sm-3">Preço:</dt>
+            <dd class="col-sm-9">R$ @Model.Price.ToString("F2")</dd>
+
+            <dt class="col-sm-3">Ingredientes:</dt>
+            <dd class="col-sm-9">
+                @string.Join(", ", Model.Ingredientes.Select(i => i.Name))
+            </dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <div class="d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-danger">Excluir</button>
+            </div>
+        </form>
+    </div>
+</div>

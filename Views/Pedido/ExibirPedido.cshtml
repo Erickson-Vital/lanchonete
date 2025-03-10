@@ -1,0 +1,30 @@
+﻿@model lanchonete.Models.Pedido
+
+@{
+    ViewData["Title"] = "Seu Pedido";
+}
+
+<h2>Seu Pedido</h2>
+
+@if (Model.Itens != null && Model.Itens.Any())
+{
+    <ul class="list-group">
+        @foreach (var item in Model.Itens)
+        {
+            <li class="list-group-item">
+                <strong>@item.Lanche.Name</strong> - @item.Quantidade x @item.Price.ToString("C")
+            </li>
+        }
+    </ul>
+
+    <p class="mt-3">
+        <strong>Total:</strong> @Model.Itens.Sum(i => i.Price * i.Quantidade).ToString("C")
+    </p>
+
+    <a asp-controller="Pedido" asp-action="FinalizarPedido" class="btn btn-success">Finalizar Pedido</a>
+}
+else
+{
+    <p>Seu pedido está vazio.</p>
+}
+
