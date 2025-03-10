@@ -51,6 +51,9 @@ Sistema web para gestao de pedidos para uma lanchonete.
 ```bash
 git clone https://github.com/seuusuario/lanchonete.git
 cd lanchonete
+
+Configurar o "DefaultConnection" que esta em "Appsettings.json" colocando a string de conexao do banco
+
 dotnet ef update-database
 dotnet run
 
