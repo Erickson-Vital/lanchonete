@@ -77,7 +77,7 @@ namespace lanchonete.Controllers
                         ImageMimiType = lancheDto.Image.ContentType,
                         Name = lancheDto.Name,
                         Ingredientes = ingredientesSelecionados,
-                        Price = lancheDto.Price // O valor calculado no Front será salvo aqui!
+                        Price = lancheDto.Price
                     };
 
                     _context.Lanches.Add(lanche);
@@ -130,6 +130,100 @@ namespace lanchonete.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var lanche = await _context.Lanches
+                .Include(l => l.Ingredientes)
+                .FirstOrDefaultAsync(l => l.Id == id);
+
+            if (lanche == null)
+                return NotFound();
+
+            var lancheDto = new LancheDto
+            {
+                Name = lanche.Name,
+                Price = lanche.Price,
+                IngredientesSelecionados = lanche.Ingredientes.Select(i => i.Id).ToList()
+            };
+
+            var ingredientes = _context.Ingredientes
+                .Select(i => new { id = i.Id, nome = i.Name, preco = i.Price })
+                .ToList();
+
+            ViewBag.IngredientesJson = System.Text.Json.JsonSerializer.Serialize(ingredientes);
+            ViewBag.ExibirImagemAtual = $"data:{lanche.ImageMimiType};base64,{Convert.ToBase64String(lanche.Image)}";
+            ViewBag.LancheId = id;
+
+            return View(lancheDto);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, LancheDto lancheDto)
+        {
+            var lanche = await _context.Lanches
+                .Include(l => l.Ingredientes)
+                .FirstOrDefaultAsync(l => l.Id == id);
+
+            if (lanche == null)
+                return NotFound();
+
+            ModelState.Remove("Image");
+
+            if (!ModelState.IsValid)
+            {
+                var ingredientes = _context.Ingredientes
+                    .Select(i => new { id = i.Id, nome = i.Name, preco = i.Price })
+                    .ToList();
+
+                ViewBag.IngredientesJson = System.Text.Json.JsonSerializer.Serialize(ingredientes);
+                ViewBag.LancheId = id;
+
+                return View(lancheDto);
+            }
+
+            lanche.Name = lancheDto.Name;
+            lanche.Price = lancheDto.Price;
+
+            if (lancheDto.Image != null)
+            {
+                using var memoryStream = new MemoryStream();
+                await lancheDto.Image.CopyToAsync(memoryStream);
+
+                if (memoryStream.Length < 2097152) // 2MB
+                {
+                    lanche.Image = memoryStream.ToArray();
+                    lanche.ImageMimiType = lancheDto.Image.ContentType;
+                }
+                else
+                {
+                    ModelState.AddModelError("Image", "O arquivo da imagem é muito grande.");
+
+                    var ingredientes = _context.Ingredientes
+                        .Select(i => new
+                        {
+                            id = i.Id,
+                            nome = i.Name,
+                            preco = i.Price
+                        }).ToList();
+
+                    ViewBag.IngredientesJson = System.Text.Json.JsonSerializer.Serialize(ingredientes);
+                    ViewBag.LancheId = id;
+
+                    return View(lancheDto);
+                }
+            }
+
+            lanche.Ingredientes = _context.Ingredientes
+                .Where(i => lancheDto.IngredientesSelecionados.Contains(i.Id))
+                .ToList();
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
 
     }

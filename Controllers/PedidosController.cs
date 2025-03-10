@@ -11,12 +11,23 @@ namespace lanchonete.Controllers
     public class PedidoController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager; // Para obter o usuário logado
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public PedidoController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
+        }
+
+        // Regrinha para os desconto dos pedidos 
+        private decimal CalcularDesconto(decimal precoOriginal, int quantidade)
+        {
+            if (quantidade >= 5)
+                return precoOriginal * 0.9m; // 10% de desconto
+            if (quantidade >= 3)
+                return precoOriginal * 0.95m; // 5% de desconto
+
+            return precoOriginal; // Sem desconto
         }
 
         public IActionResult AdicionarAoPedido(int id)
@@ -47,23 +58,22 @@ namespace lanchonete.Controllers
             if (itemExistente != null)
             {
                 itemExistente.Quantidade++;
+                itemExistente.Price = CalcularDesconto(lanche.Price, itemExistente.Quantidade);
             }
             else
             {
                 pedidoAtual.Itens.Add(new ItemPedido
                 {
                     LancheID = lanche.Id,
-                    Lanche = lanche,
                     Quantidade = 1,
-                    Price = lanche.Price // preço unitário
+                    Lanche = lanche,
+                    Price = CalcularDesconto(lanche.Price, 1)
                 });
             }
 
             SalvarPedidoNaSessao(pedidoAtual);
             return RedirectToAction("Index", "Cardapio");
         }
-
-
 
         public IActionResult ExibirPedido()
         {
@@ -80,40 +90,47 @@ namespace lanchonete.Controllers
                 return RedirectToAction("Index", "Cardapio");
             }
 
+            var quantidadeTotalLanches = pedido.Itens.Sum(i => i.Quantidade);
+            decimal total = pedido.Itens.Sum(i => i.Price * i.Quantidade);
+            decimal desconto = 0;
+
+            if (quantidadeTotalLanches == 2)
+                desconto = total * 0.03m;
+            else if (quantidadeTotalLanches == 3)
+                desconto = total * 0.05m;
+            else if (quantidadeTotalLanches >= 5)
+                desconto = total * 0.10m;
+
+            decimal totalComDesconto = total - desconto;
+
             var usuarioId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var novoPedido = new Pedido
             {
+                Price = totalComDesconto,
                 CreatedDate = DateTime.Now,
                 Status = 0,
                 UsuarioId = usuarioId,
-                Itens = new List<ItemPedido>()
+                Itens = pedido.Itens.Select(i => new ItemPedido
+                {
+                    LancheID = i.LancheID,
+                    Quantidade = i.Quantidade,
+                    Price = i.Price
+                }).ToList()
             };
 
-            foreach (var item in pedido.Itens)
-            {
-                // Garante que o Lanche já está sendo rastreado, não vai tentar inseri-lo de novo
-                var lancheReal = await _context.Lanches.FindAsync(item.LancheID);
-
-                if (lancheReal != null)
-                {
-                    novoPedido.Itens.Add(new ItemPedido
-                    {
-                        LancheID = lancheReal.Id,
-                        Lanche = lancheReal,
-                        Quantidade = item.Quantidade,
-                        Price = lancheReal.Price
-                    });
-                }
-            }
-
-            novoPedido.Price = novoPedido.Itens.Sum(i => i.Price * i.Quantidade);
 
             _context.Pedidos.Add(novoPedido);
             await _context.SaveChangesAsync();
 
+            // Carrega o pedido com os lanches para exibir na tela
+            var pedidoCompleto = await _context.Pedidos
+                .Include(p => p.Itens)
+                    .ThenInclude(i => i.Lanche)
+                .FirstOrDefaultAsync(p => p.Id == novoPedido.Id);
+
             LimparPedido();
 
-            return View("Views/Pedido/PedidoFinalizado.cshtml", novoPedido);
+            return View("PedidoFinalizado", pedidoCompleto);
         }
 
         public IActionResult RemoverDoPedido(int id)
@@ -132,7 +149,6 @@ namespace lanchonete.Controllers
 
             return RedirectToAction("Index", "Cardapio");
         }
-
 
         private Pedido ObterPedidoAtual()
         {
@@ -155,7 +171,6 @@ namespace lanchonete.Controllers
             HttpContext.Session.Remove("Pedido");
         }
 
-
         [Authorize]
         public IActionResult MeusPedidos()
         {
@@ -172,7 +187,6 @@ namespace lanchonete.Controllers
             return View("MeusPedidos", pedidos);
         }
 
-
         [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> Concluir(int id)
@@ -187,7 +201,5 @@ namespace lanchonete.Controllers
 
             return RedirectToAction("MeusPedidos");
         }
-
-
     }
 }

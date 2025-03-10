@@ -19,7 +19,7 @@ namespace lanchonete.Services
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder); // Chama a configuração base do Identity
+            base.OnModelCreating(modelBuilder);
 
             // Configuração da relação do Many-to-Many entre Lanche e Ingredientes(DIFCILLL)
             modelBuilder.Entity<Lanche>()

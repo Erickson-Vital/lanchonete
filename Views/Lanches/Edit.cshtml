@@ -1,0 +1,79 @@
+﻿@model lanchonete.DTOs.LancheDto
+@{
+    ViewData["Title"] = "Editar Lanche";
+    var ingredientesJson = ViewBag.IngredientesJson ?? "[]";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Editar Lanche</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label">Nome</label>
+                    <input asp-for="Name" class="form-control" placeholder="Digite o nome do lanche" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Price" class="form-label">Preço</label>
+                    <input asp-for="Price" class="form-control" placeholder="0,00" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Imagem Atual</label>
+                    <br />
+                    <img src="@Url.Action("GetPhoto", "Cardapio", new { id = ViewBag.LancheId })"
+                         alt="Imagem do Lanche"
+                         class="img-thumbnail shadow-sm"
+                         style="max-width: 200px;" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Image" class="form-label">Nova Imagem (opcional)</label>
+                    <input asp-for="Image" type="file" class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Ingredientes</label>
+                    <div id="ingredientesCheckboxes" class="row row-cols-1 row-cols-md-2 g-2"></div>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">💾 Salvar Alterações</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const ingredientes = @Html.Raw(ingredientesJson);
+        const selecionados = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.IngredientesSelecionados ?? new List<int>()));
+
+        const container = document.getElementById("ingredientesCheckboxes");
+
+        ingredientes.forEach(i => {
+            const col = document.createElement("div");
+            col.className = "form-check";
+
+            const checkbox = document.createElement("input");
+            checkbox.className = "form-check-input";
+            checkbox.type = "checkbox";
+            checkbox.name = "IngredientesSelecionados";
+            checkbox.value = i.id;
+            if (selecionados.includes(i.id)) checkbox.checked = true;
+
+            const label = document.createElement("label");
+            label.className = "form-check-label";
+            label.innerText = `${i.nome} (R$ ${i.preco})`;
+
+            col.appendChild(checkbox);
+            col.appendChild(label);
+            container.appendChild(col);
+        });
+    </script>
+}

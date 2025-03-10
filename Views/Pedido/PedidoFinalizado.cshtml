@@ -2,12 +2,30 @@
 
 @{
     ViewData["Title"] = "Pedido Finalizado";
+
+    int quantidadeTotal = Model.Itens.Sum(i => i.Quantidade);
+    decimal subtotal = Model.Itens.Sum(i => i.Price * i.Quantidade);
+    decimal desconto = 0;
+
+    if (quantidadeTotal == 2)
+    {
+        desconto = subtotal * 0.03m;
+    }
+    else if (quantidadeTotal == 3)
+    {
+        desconto = subtotal * 0.05m;
+    }
+    else if (quantidadeTotal >= 5)
+    {
+        desconto = subtotal * 0.10m;
+    }
+
+    decimal totalComDesconto = subtotal - desconto;
 }
 
 <div class="container mt-5">
     <div class="card shadow-lg p-5 text-center">
         <h2 class="text-success mb-4">Pedido Finalizado com Sucesso!!</h2>
-
         <p class="lead">Seu pedido foi registrado no sistema</p>
 
         <hr />
@@ -18,12 +36,18 @@
             {
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span>@item.Lanche.Name (@item.Quantidade x @item.Price.ToString("C"))</span>
-                    <span>Total: @(item.Quantidade * item.Price).ToString("C")</span>
+                    <span class="fw-bold">Total: @((item.Quantidade * item.Price).ToString("C"))</span>
+
                 </li>
+
             }
         </ul>
 
-        <h5 class="mt-3">Valor Total: <strong>@Model.Itens.Sum(i => i.Price * i.Quantidade).ToString("C")</strong></h5>
+        <div class="text-start">
+            <p><strong>Subtotal:</strong> @subtotal.ToString("C")</p>
+            <p><strong>Desconto:</strong> @desconto.ToString("C")</p>
+            <p><strong>Total com Desconto:</strong> @totalComDesconto.ToString("C")</p>
+        </div>
 
         <a asp-controller="Cardapio" asp-action="Index" class="btn btn-primary mt-4">Voltar ao Cardápio</a>
     </div>

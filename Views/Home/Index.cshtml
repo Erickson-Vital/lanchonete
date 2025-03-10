@@ -2,7 +2,22 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Bem vindo a lanchonete Tabala</h1>
-    <img src="~/logo.png" alt="Logo da Lanchonete Tabala" class="img-fluid" />
+<div class="container text-center mt-5">
+    <h1 class="display-4 fw-bold text-warning">🍔 Bem-vindo à Lanchonete TaBala Burgures!</h1>
+    <p class="lead text-white mt-3">A melhor hamburgueria da galáxia! Faça seu pedido e aproveite nossas delícias.</p>
+
+    <img src="~/logo.png" alt="Logo da Lanchonete Tabala" class="img-fluid rounded shadow-sm my-4" style="max-height: 250px;" />
+
+    <div class="mt-4">
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <p class="fs-5 text-white">Para acessar o cardápio e fazer pedidos, é necessário estar logado.</p>
+            <a class="btn btn-primary btn-lg me-2" id="login" asp-area="Identity" asp-page="/Account/Login">Entrar</a>
+            <a class="btn btn-outline-light btn-lg" id="register" asp-area="Identity" asp-page="/Account/Register">Registrar</a>
+        }
+        else
+        {
+            <a class="btn btn-success btn-lg" asp-controller="Cardapio" asp-action="Index">Ir para o Cardápio</a>
+        }
+    </div>
 </div>

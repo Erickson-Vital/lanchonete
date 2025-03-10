@@ -10,7 +10,7 @@ namespace lanchonete.Models
         public DateTime CreatedDate { get; set; }
         public ICollection<ItemPedido> Itens { get; set; }
 
-        // Adicionado: relacionamento com o usuário
+        // Adicionado: relacionamento com o usuario
         public string UsuarioId { get; set; }
         [ForeignKey("UsuarioId")]
         public ApplicationUser Usuario { get; set; }

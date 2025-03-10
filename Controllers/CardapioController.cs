@@ -17,7 +17,7 @@ namespace lanchonete.Controllers
         public async Task<IActionResult> Index()
         {
             var lanches = await _context.Lanches
-                .Include(l => l.Ingredientes) // Garante que os ingredientes são carregados
+                .Include(l => l.Ingredientes)
                 .ToListAsync();
 
             return View(lanches);
@@ -30,7 +30,7 @@ namespace lanchonete.Controllers
 
             if (lanche == null || lanche.Image == null)
             {
-                return NotFound(); // Evita erro se a imagem for nula
+                return NotFound();
             }
 
             return File(lanche.Image, lanche.ImageMimiType);
