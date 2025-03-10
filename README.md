@@ -9,7 +9,6 @@ Sistema web para gestao de pedidos para uma lanchonete.
 - SQL Server (via Migrations)  
 - Identity para autenticação  
 - Bootstrap 5  
-- Session para manter carrinho do pedido
 
 ## 👥 Perfis de Usuário
 
@@ -45,7 +44,6 @@ Sistema web para gestao de pedidos para uma lanchonete.
 - ASP.NET Core MVC para estrutura clara em camadas.
 - Entity Framework Core com Migrations para controle de dados.
 - Identity para controle de login e segurança.
-- Session para controle de pedidos em andamento.
 
 ### Passos:
 ```bash
