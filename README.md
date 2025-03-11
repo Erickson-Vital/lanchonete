@@ -53,7 +53,7 @@ Configurar o "DefaultConnection" que esta em "Appsettings.json" colocando a stri
 
 update-database (para rodar a migration)
 
-Criar usuario e fazer relação das regras de ADMIN para o mesmo.
+Criar usuario pelo sistema e depois fazer relação das regras de ADMIN para o mesmo no banco.
 
 pegando o ID de ADMIN na tabela "AspNetRoles" e colando na coluna "RoleID" na tabela "AspNetUserRoles"
 
